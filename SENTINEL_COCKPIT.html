@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentinel — Offboarding Cockpit</title>
+  <!-- Google Fonts Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-base: hsl(240, 25%, 5%);
+      --bg-surface: hsla(240, 20%, 10%, 0.7);
+      --bg-surface-hover: hsla(240, 20%, 15%, 0.85);
+      --border-color: hsla(240, 15%, 22%, 0.5);
+      
+      --accent-primary: hsl(270, 85%, 68%); /* Electric Violet */
+      --accent-secondary: hsl(190, 90%, 55%); /* Neon Cyan */
+      --accent-highlight: hsl(325, 95%, 60%); /* Hot Pink */
+      --accent-success: hsl(145, 80%, 48%);
+      --accent-warning: hsl(40, 90%, 55%);
+      
+      --text-main: hsl(240, 10%, 88%);
+      --text-muted: hsl(240, 8%, 62%);
+      --text-bright: hsl(0, 0%, 100%);
+      
+      --shadow-premium: 0 20px 50px -10px rgba(5, 5, 15, 0.8);
+      --shadow-glow-violet: 0 0 30px -5px hsla(270, 85%, 68%, 0.35);
+      --shadow-glow-cyan: 0 0 30px -5px hsla(190, 90%, 55%, 0.3);
+      
+      --font-outfit: 'Outfit', sans-serif;
+      --font-inter: 'Inter', sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      background-image: 
+        radial-gradient(at 0% 0%, hsla(270, 60%, 12%, 0.3) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, hsla(190, 60%, 10%, 0.25) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, hsla(240, 35%, 8%, 0.1) 0px, transparent 80%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: var(--font-inter);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 32px;
+      line-height: 1.5;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-base);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: hsl(240, 12%, 22%);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-primary);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px 36px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-premium);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand-logo {
+      width: 54px;
+      height: 54px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px dashed var(--accent-primary);
+      animation: rotateRing 25s linear infinite;
+    }
+
+    .logo-ring-inner {
+      position: absolute;
+      width: 75%;
+      height: 75%;
+      border-radius: 50%;
+      border: 2px solid var(--accent-secondary);
+      box-shadow: var(--shadow-glow-cyan);
+    }
+
+    .brand-text h1 {
+      font-family: var(--font-outfit);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--text-bright) 30%, var(--text-muted) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-text span {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--accent-secondary);
+      text-transform: uppercase;
+      display: block;
+      margin-top: -2px;
+    }
+
+    .header-metrics {
+      display: flex;
+      gap: 40px;
+    }
+
+    .h-metric {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .h-metric-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .h-metric-val {
+      font-family: var(--font-outfit);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-bright);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pulse {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--accent-success);
+      box-shadow: 0 0 12px var(--accent-success);
+      animation: pulseGlow 2s infinite;
+    }
+
+    /* Grid Layout */
+    .cockpit-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 1200px) {
+      .cockpit-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Panel Styles */
+    .panel {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: var(--shadow-premium);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .panel:hover {
+      border-color: hsla(270, 85%, 68%, 0.2);
+      box-shadow: var(--shadow-glow-violet), var(--shadow-premium);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+    }
+
+    .panel-title {
+      font-family: var(--font-outfit);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-bright);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-top: 2px;
+    }
+
+    /* Device Card Grid */
+    .device-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .device-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .device-card {
+      background: hsla(240, 15%, 8%, 0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.2s ease;
+    }
+
+    .device-card:hover {
+      background: var(--bg-surface-hover);
+      border-color: var(--accent-secondary);
+      transform: translateY(-2px);
+    }
+
+    .device-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .device-name {
+      font-family: var(--font-outfit);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .device-status {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .status-active {
+      background: hsla(145, 80%, 48%, 0.1);
+      color: var(--accent-success);
+      border: 1px solid hsla(145, 80%, 48%, 0.2);
+    }
+
+    .status-wipe-pending {
+      background: hsla(40, 90%, 55%, 0.1);
+      color: var(--accent-warning);
+      border: 1px solid hsla(40, 90%, 55%, 0.2);
+    }
+
+    /* Backup Items Table */
+    .backup-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .backup-table th {
+      text-align: left;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .backup-table td {
+      padding: 12px 0;
+      border-bottom: 1px dashed hsla(240, 15%, 22%, 0.3);
+      vertical-align: middle;
+    }
+
+    .backup-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .item-category {
+      font-family: var(--font-outfit);
+      font-weight: 600;
+      color: var(--text-bright);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .item-path {
+      font-family: var(--font-mono);
+      color: var(--accent-secondary);
+      font-size: 12px;
+    }
+
+    .item-count {
+      text-align: right;
+      font-weight: 500;
+    }
+
+    .item-size {
+      text-align: right;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    /* Compliance Matrix Card */
+    .compliance-matrix {
+      background: hsla(240, 15%, 8%, 0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .compliance-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .compliance-title {
+      font-family: var(--font-outfit);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .compliance-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .compliance-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .comp-label {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .comp-status {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--accent-success);
+    }
+
+    /* Tab Layout inside Panel */
+    .details-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: var(--font-outfit);
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-bright);
+      background: hsla(240, 12%, 18%, 0.5);
+    }
+
+    .tab-btn.active {
+      color: var(--accent-secondary);
+      background: hsla(190, 90%, 55%, 0.1);
+      border: 1px solid hsla(190, 90%, 55%, 0.25);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Legend Indicator */
+    .metric-legend {
+      display: flex;
+      justify-content: space-around;
+      background: hsla(240, 15%, 8%, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 24px;
+      font-size: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+    }
+
+    .legend-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* Checklist Widgets */
+    .check-item {
+      display: flex;
+      gap: 16px;
+      background: hsla(240, 15%, 8%, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .check-item:hover {
+      background: var(--bg-surface-hover);
+      border-color: var(--accent-primary);
+    }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--accent-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .check-box.checked {
+      background-color: var(--accent-primary);
+      box-shadow: var(--shadow-glow-violet);
+    }
+
+    .check-box.checked::after {
+      content: '✓';
+      color: var(--text-bright);
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .check-text h4 {
+      font-family: var(--font-outfit);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    .check-text p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Animations */
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseGlow {
+      0% { opacity: 0.4; transform: scale(0.95); }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0.4; transform: scale(0.95); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .header-metrics {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">
+        <div class="logo-ring"></div>
+        <div class="logo-ring-inner"></div>
+      </div>
+      <div class="brand-text">
+        <h1>SENTINEL</h1>
+        <span>Offboarding & Preservation Cockpit</span>
+      </div>
+    </div>
+    
+    <div class="header-metrics">
+      <div class="h-metric">
+        <span class="h-metric-label">Compliance Code</span>
+        <span class="h-metric-val" style="color: var(--accent-secondary)">Article 20 [OK]</span>
+      </div>
+      <div class="h-metric">
+        <span class="h-metric-label">Secured IP Size</span>
+        <span class="h-metric-val">~5.27 GB</span>
+      </div>
+      <div class="h-metric">
+        <span class="h-metric-label">Sentinel State</span>
+        <span class="h-metric-val"><span class="pulse"></span> ACTIVE</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="cockpit-grid">
+    
+    <!-- LEFT PANEL: Devices & Backups Matrix -->
+    <div class="panel">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Unified Preservation Matrix</h2>
+          <span class="panel-subtitle">COORDINATES: S21.BACKUP // LAPTOP.TARBALLS</span>
+        </div>
+      </div>
+
+      <div class="device-grid">
+        
+        <!-- S21 Work Phone Card -->
+        <div class="device-card">
+          <div class="device-meta">
+            <h3 class="device-name">Samsung Galaxy S21</h3>
+            <span class="device-status status-wipe-pending">Wipe Pending</span>
+          </div>
+          
+          <div class="circle-loader-container">
+            <div style="position: relative; width: 100px; height: 100px;">
+              <svg width="100" height="100">
+                <circle cx="50" cy="50" r="40" stroke="hsla(240, 15%, 22%, 0.3)" stroke-width="6" fill="transparent"/>
+                <circle class="svg-ring-circle" cx="50" cy="50" r="40" stroke="var(--accent-secondary)" stroke-width="6" fill="transparent"
+                        stroke-dasharray="251.2" stroke-dashoffset="22.6" style="transition: stroke-dashoffset 1s ease-out;"/>
+              </svg>
+              <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                <span style="font-family: var(--font-outfit); font-size: 22px; font-weight: 800; color: var(--text-bright);">91%</span>
+                <span style="display: block; font-size: 8px; color: var(--text-muted); text-transform: uppercase;">Secured</span>
+              </div>
+            </div>
+            <p style="font-size: 11px; color: var(--text-muted); margin-top: 12px; text-align: center;">
+              <strong>2.57 GB</strong> Personal Extracted<br>
+              <span style="color: var(--accent-success)">25.2 GB public APKs skipped</span>
+            </p>
+          </div>
+
+          <table class="backup-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th style="text-align: right;">Count</th>
+                <th style="text-align: right;">Size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="item-category">📷 Photos</td>
+                <td class="item-count">1,138</td>
+                <td class="item-size">1,099.0 MB</td>
+              </tr>
+              <tr>
+                <td class="item-category">🎥 Videos</td>
+                <td class="item-count">196</td>
+                <td class="item-size">1,417.6 MB</td>
+              </tr>
+              <tr>
+                <td class="item-category">📝 Samsung Notes</td>
+                <td class="item-count">1</td>
+                <td class="item-size">26.2 MB</td>
+              </tr>
+              <tr>
+                <td class="item-category">🔑 Samsung Pass</td>
+                <td class="item-count">1</td>
+                <td class="item-size">3.2 MB</td>
+              </tr>
+              <tr>
+                <td class="item-category">📄 Docs & Contacts</td>
+                <td class="item-count">527</td>
+                <td class="item-size">4.1 MB</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Dell Work Laptop Card -->
+        <div class="device-card">
+          <div class="device-meta">
+            <h3 class="device-name">Dell Latitude Laptop</h3>
+            <span class="device-status status-wipe-pending">Wipe Pending</span>
+          </div>
+
+          <div class="circle-loader-container">
+            <div style="position: relative; width: 100px; height: 100px;">
+              <svg width="100" height="100">
+                <circle cx="50" cy="50" r="40" stroke="hsla(240, 15%, 22%, 0.3)" stroke-width="6" fill="transparent"/>
+                <circle class="svg-ring-circle" cx="50" cy="50" r="40" stroke="var(--accent-primary)" stroke-width="6" fill="transparent"
+                        stroke-dasharray="251.2" stroke-dashoffset="0" style="transition: stroke-dashoffset 1s ease-out;"/>
+              </svg>
+              <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                <span style="font-family: var(--font-outfit); font-size: 22px; font-weight: 800; color: var(--text-bright);">100%</span>
+                <span style="display: block; font-size: 8px; color: var(--text-muted); text-transform: uppercase;">Secured</span>
+              </div>
+            </div>
+            <p style="font-size: 11px; color: var(--text-muted); margin-top: 12px; text-align: center;">
+              <strong>2.70 GB</strong> Personal IP Encrypted<br>
+              <span style="color: var(--accent-success)">9 Custom Tarballs Safe</span>
+            </p>
+          </div>
+
+          <table class="backup-table">
+            <thead>
+              <tr>
+                <th>Archive</th>
+                <th style="text-align: right;">Target</th>
+                <th style="text-align: right;">Size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="item-category">🖼️ Pictures Tarball</td>
+                <td class="item-path">Pictures/</td>
+                <td class="item-size">1.42 GB</td>
+              </tr>
+              <tr>
+                <td class="item-category">📥 Smart Downloads</td>
+                <td class="item-path">Downloads/</td>
+                <td class="item-size">260.0 MB</td>
+              </tr>
+              <tr>
+                <td class="item-category">💼 Financial Records</td>
+                <td class="item-path">financial/</td>
+                <td class="item-size">229.0 MB</td>
+              </tr>
+              <tr>
+                <td class="item-category">🚀 Personal IP</td>
+                <td class="item-path">repos/</td>
+                <td class="item-size">150.0 MB</td>
+              </tr>
+              <tr>
+                <td class="item-category">🐧 WSL Ubuntu</td>
+                <td class="item-path">wsl/</td>
+                <td class="item-size">113 KB</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- Compliance Matrix -->
+      <div class="compliance-matrix">
+        <div class="compliance-header">
+          <h3 class="compliance-title">Compliance & Legal Audit Matrix</h3>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent-success);">VERIFIED SECURE</span>
+        </div>
+        <div class="compliance-list">
+          <div class="compliance-item">
+            <span class="comp-label">🛡️ Article 20 Compliance (Confidentiality Attestation)</span>
+            <span class="comp-status">✓ Wiped Customer Names & Codenames</span>
+          </div>
+          <div class="compliance-item">
+            <span class="comp-label">📄 Article 24 reference Letter request</span>
+            <span class="comp-status">✓ Drafted & mirror safe</span>
+          </div>
+          <div class="compliance-item">
+            <span class="comp-label">🚪 Article 25 Property Return Boundary</span>
+            <span class="comp-status">✓ Cleared personal files only</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL: Accounts & Offboarding checklists -->
+    <div class="panel">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Accounts & Sentinel Operations</h2>
+          <span class="panel-subtitle">COORDINATES: CLOUD.SYNC // SECURE.SWEEP</span>
+        </div>
+      </div>
+
+      <div class="details-tabs">
+        <button class="tab-btn active" onclick="switchTab('ops')">Sentinel Sweep</button>
+        <button class="tab-btn" onclick="switchTab('accounts')">Account Shield</button>
+      </div>
+
+      <!-- Tab: Operations -->
+      <div id="tab-ops" class="tab-content active">
+        <div class="check-item">
+          <div class="check-box checked"></div>
+          <div class="check-text">
+            <h4>Isolate S21 Personal Data</h4>
+            <p>1,902 personal photos, videos, notes, and credentials extracted to OneDrive, skipping 25.2 GB app installers.</p>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-box checked"></div>
+          <div class="check-text">
+            <h4>Execute Compliant Wiping Script</h4>
+            <p>HANDBACK_CLEANUP.ps1 successfully ran. WSL SSH keys, git configuration, and credentials purged.</p>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-box" id="check-reset" onclick="toggleCheck('check-reset')"></div>
+          <div class="check-text">
+            <h4>Samsung S21 Physical Factory Reset</h4>
+            <p>Wipe personal accounts in Settings, then perform secure hardware factory data reset.</p>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-box" id="check-browser" onclick="toggleCheck('check-browser')"></div>
+          <div class="check-text">
+            <h4>Browser Data Purge</h4>
+            <p>Open Chrome/Edge/Vivaldi on laptop, turn sync OFF, clear history (All Time), and delete local profiles.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Accounts -->
+      <div id="tab-accounts" class="tab-content">
+        <table class="backup-table" style="font-size: 12px;">
+          <thead>
+            <tr>
+              <th>Account</th>
+              <th>Shield Action</th>
+              <th style="text-align: right;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🐙 GitHub (frankxai)</td>
+              <td>Rotate Personal Access Token</td>
+              <td class="item-size" style="color: var(--accent-warning)">PENDING ROTATION</td>
+            </tr>
+            <tr>
+              <td>☁️ Google Cloud</td>
+              <td>Revoke & Rotate 5 Gemini API Keys</td>
+              <td class="item-size" style="color: var(--accent-warning)">PENDING ROTATION</td>
+            </tr>
+            <tr>
+              <td>🧪 Anthropic Claude</td>
+              <td>Rotate Dev API Keys</td>
+              <td class="item-size" style="color: var(--accent-warning)">PENDING ROTATION</td>
+            </tr>
+            <tr>
+              <td>🎨 Vercel / Stripe</td>
+              <td>Revoke deploy tokens</td>
+              <td class="item-size" style="color: var(--accent-warning)">PENDING ROTATION</td>
+            </tr>
+            <tr>
+              <td>🔑 Samsung Pass</td>
+              <td>Passwords & Passkeys Secured</td>
+              <td class="item-size" style="color: var(--accent-success); font-weight: bold;">SECURED (3.2 MB)</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div class="metric-legend">
+          <div class="legend-item">
+            <span class="legend-indicator" style="background-color: var(--accent-success)"></span>
+            <span>Secured / Wiped</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-indicator" style="background-color: var(--accent-warning)"></span>
+            <span>User Action Required</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      // Remove active class from buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      // Hide all contents
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      // Add active to selected
+      if (tabId === 'ops') {
+        document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+        document.getElementById('tab-ops').classList.add('active');
+      } else {
+        document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+        document.getElementById('tab-accounts').classList.add('active');
+      }
+    }
+
+    function toggleCheck(id) {
+      const box = document.getElementById(id);
+      box.classList.toggle('checked');
+    }
+  </script>
+</body>
+</html>
