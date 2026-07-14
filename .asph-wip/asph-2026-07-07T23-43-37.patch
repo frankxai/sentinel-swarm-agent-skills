@@ -1,0 +1,149 @@
+diff --git a/.agent-harness.json b/.agent-harness.json
+new file mode 100644
+index 0000000..e895bb1
+--- /dev/null
++++ b/.agent-harness.json
+@@ -0,0 +1,45 @@
++﻿{
++    "name":  "sentinel-swarm-cockpit",
++    "classification":  "agent-substrate",
++    "owner":  "FrankX AI",
++    "updated":  "2026-06-19",
++    "remote":  "https://github.com/frankxai/sentinel-swarm-agent-skills.git",
++    "health":  {
++                   "primaryCheck":  "git status",
++                   "manualChecks":  [
++                                        "Review AGENTS.md before edits",
++                                        "Preserve user work and dirty files",
++                                        "Scan public outputs for secrets and private memory"
++                                    ]
++               },
++    "agentGuidance":  {
++                          "readAgentsMd":  true,
++                          "avoidPrivateMemory":  true,
++                          "preserveExistingConventions":  true,
++                          "designTasteKernel":  {
++                                                    "enabled":  true,
++                                                    "root":  "C:\\Users\\frank\\starlight\\repos",
++                                                    "files":  [
++                                                                  "C:\\Users\\frank\\starlight\\repos\\DESIGN_TASTE.md",
++                                                                  "C:\\Users\\frank\\starlight\\repos\\WEB_EXPERIENCE_STANDARD.md",
++                                                                  "C:\\Users\\frank\\starlight\\repos\\MOTION_TASTE_RUBRIC.md",
++                                                                  "C:\\Users\\frank\\starlight\\repos\\MULTI_AGENT_DESIGN_COUNCIL.md",
++                                                                  "C:\\Users\\frank\\starlight\\repos\\VISUAL_QA_GATE.md"
++                                                              ],
++                                                    "appliesTo":  [
++                                                                      "site",
++                                                                      "app",
++                                                                      "landing-page",
++                                                                      "dashboard",
++                                                                      "visual-identity",
++                                                                      "brand",
++                                                                      "motion",
++                                                                      "media",
++                                                                      "social",
++                                                                      "frontend"
++                                                                  ],
++                                                    "motionPlugin":  "motion-design-studio",
++                                                    "visualVerificationRequired":  true
++                                                }
++                      }
++}
+diff --git a/agents.md b/agents.md
+index 6be14a1..a35d8c6 100644
+--- a/agents.md
++++ b/agents.md
+@@ -1,13 +1,13 @@
+-# 🤖 AGENTS.md: Unified Multi-Agent Coordination Protocol (UMCP)
++﻿# ðŸ¤– AGENTS.md: Unified Multi-Agent Coordination Protocol (UMCP)
+ 
+ _For all incoming Claude Code, Gemini, and local LLM agent sessions._
+ _Version: 1.0 (Sentinel Core)_
+ 
+ ---
+ 
+-## 🧬 1. The Sovereign Context
++## ðŸ§¬ 1. The Sovereign Context
+ 
+-Welcome, Agent. You are operating inside the **Sovereign Exocortex** of **Frank Riemer**—AI Architect, Creator, and Builder. 
++Welcome, Agent. You are operating inside the **Sovereign Exocortex** of **Frank Riemer**â€”AI Architect, Creator, and Builder. 
+ 
+ Our mission is absolute data sovereignty, high-depth technical craftsmanship, and compliant intellectual property preservation. As an agent, you must coordinate seamlessly with other active or background sessions to maintain, build, and deploy Frank's digital assets.
+ 
+@@ -19,7 +19,7 @@ Our mission is absolute data sovereignty, high-depth technical craftsmanship, an
+ 
+ ---
+ 
+-## 💾 2. Shared Environment & Memory Management
++## ðŸ’¾ 2. Shared Environment & Memory Management
+ 
+ To maintain continuous cognitive state across distinct terminal and browser sessions, all agents must adhere to the following memory protocols:
+ 
+@@ -30,7 +30,7 @@ Always ensure your local session has access to the shared ChromaDB server:
+ 
+ ### B. Self-Documentation Logging
+ Every session that modifies files or commits code must log its work to:
+-📂 **`C:\Users\frank\OneDrive\backups\Dell Backup\_TAKE_THIS_FOLDER_2026-05-25\audit\DECISION_LOG.md`**
++ðŸ“‚ **`C:\Users\frank\OneDrive\backups\Dell Backup\_TAKE_THIS_FOLDER_2026-05-25\audit\DECISION_LOG.md`**
+ 
+ Format your entry as:
+ ```markdown
+@@ -45,25 +45,25 @@ Format your entry as:
+ 
+ ---
+ 
+-## 🌐 3. Unified Cloud & Repository Mapping
++## ðŸŒ 3. Unified Cloud & Repository Mapping
+ 
+ All agents must respect the designated boundaries between work archives, personal hubs, and cloud directories to maintain absolute compliance (clean-hands defensibility):
+ 
+ | Directory / Resource | Sync Strategy | Purpose |
+ |----------------------|---------------|---------|
+-| 📂 `OneDrive\backups\Dell Backup\` | Synced (Personal OneDrive) | Mirrored transition backups of your personal laptop files. |
+-| 📂 `OneDrive\Backups\2026-05-oracle-transition\S21_Extracted_Personal\` | Synced (Personal OneDrive) | Extracted mobile raw data roll (Photos, Notes, Passwords), strictly excluding APK files. |
+-| 🐙 `sentinel-swarm-agent-skills` (GitHub) | Live Private Repo | Visual dashboards, multi-agent specs, and automation tools. |
+-| 📁 `starlight\repos\FrankX` | Dev Repo / Non-Work | Main creative, writing, and ACOS development environment. |
++| ðŸ“‚ `OneDrive\backups\Dell Backup\` | Synced (Personal OneDrive) | Mirrored transition backups of your personal laptop files. |
++| ðŸ“‚ `OneDrive\Backups\2026-05-oracle-transition\S21_Extracted_Personal\` | Synced (Personal OneDrive) | Extracted mobile raw data roll (Photos, Notes, Passwords), strictly excluding APK files. |
++| ðŸ™ `sentinel-swarm-agent-skills` (GitHub) | Live Private Repo | Visual dashboards, multi-agent specs, and automation tools. |
++| ðŸ“ `starlight\repos\FrankX` | Dev Repo / Non-Work | Main creative, writing, and ACOS development environment. |
+ 
+ ---
+ 
+-## ⚙️ 4. Multi-Agent Collaborative Workflow
++## âš™ï¸ 4. Multi-Agent Collaborative Workflow
+ 
+ When multiple sessions are active, agents must follow the **Baton Handoff Protocol** to prevent merge conflicts or duplicate efforts:
+ 
+ ```
+-[Agent Session A] ──► Updates task.md [x] ──► Commits to Git ──► [Agent Session B] Reads task.md ──► Resumes Sprtnt
++[Agent Session A] â”€â”€â–º Updates task.md [x] â”€â”€â–º Commits to Git â”€â”€â–º [Agent Session B] Reads task.md â”€â”€â–º Resumes Sprtnt
+ ```
+ 
+ ### The 4-Step Handoff:
+@@ -74,7 +74,7 @@ When multiple sessions are active, agents must follow the **Baton Handoff Protoc
+ 
+ ---
+ 
+-## ⚖️ 5. Defensibility & Anti-Suspicion Rules
++## âš–ï¸ 5. Defensibility & Anti-Suspicion Rules
+ 
+ Any agent executing commands on Frank's machine must respect the **Sentinel Defensibility Protocol** to avoid triggering enterprise security anomalies (CrowdStrike, DLP alerts) during device offboarding:
+ 
+@@ -85,3 +85,16 @@ Any agent executing commands on Frank's machine must respect the **Sentinel Defe
+ ---
+ 
+ _You are now synchronized with the Sentinel swarm. Respect the design contracts in design.md and taste.md, keep files lean, and coordinate for excellence._
++
++## Design Taste Kernel
++
++For any site, app, landing page, dashboard, visual identity, brand, motion, media, social, or frontend task, apply the shared Design Taste Kernel before handoff:
++
++- C:\Users\frank\starlight\repos\DESIGN_TASTE.md
++- C:\Users\frank\starlight\repos\WEB_EXPERIENCE_STANDARD.md
++- C:\Users\frank\starlight\repos\MOTION_TASTE_RUBRIC.md
++- C:\Users\frank\starlight\repos\MULTI_AGENT_DESIGN_COUNCIL.md
++- C:\Users\frank\starlight\repos\VISUAL_QA_GATE.md
++
++When motion, scroll, generated media, GIF/video, or premium polish matters, route through the Motion Design Studio plugin/skills and verify the result visually.
++
