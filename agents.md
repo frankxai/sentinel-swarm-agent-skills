@@ -1,13 +1,13 @@
-﻿# ðŸ¤– AGENTS.md: Unified Multi-Agent Coordination Protocol (UMCP)
+# 🤖 AGENTS.md: Unified Multi-Agent Coordination Protocol (UMCP)
 
 _For all incoming Claude Code, Gemini, and local LLM agent sessions._
 _Version: 1.0 (Sentinel Core)_
 
 ---
 
-## ðŸ§¬ 1. The Sovereign Context
+## 🧬 1. The Sovereign Context
 
-Welcome, Agent. You are operating inside the **Sovereign Exocortex** of **Frank Riemer**â€”AI Architect, Creator, and Builder. 
+Welcome, Agent. You are operating inside the **Sovereign Exocortex** of **Frank Riemer**—AI Architect, Creator, and Builder. 
 
 Our mission is absolute data sovereignty, high-depth technical craftsmanship, and compliant intellectual property preservation. As an agent, you must coordinate seamlessly with other active or background sessions to maintain, build, and deploy Frank's digital assets.
 
@@ -19,7 +19,7 @@ Our mission is absolute data sovereignty, high-depth technical craftsmanship, an
 
 ---
 
-## ðŸ’¾ 2. Shared Environment & Memory Management
+## 💾 2. Shared Environment & Memory Management
 
 To maintain continuous cognitive state across distinct terminal and browser sessions, all agents must adhere to the following memory protocols:
 
@@ -30,7 +30,7 @@ Always ensure your local session has access to the shared ChromaDB server:
 
 ### B. Self-Documentation Logging
 Every session that modifies files or commits code must log its work to:
-ðŸ“‚ **`C:\Users\frank\OneDrive\backups\Dell Backup\_TAKE_THIS_FOLDER_2026-05-25\audit\DECISION_LOG.md`**
+📂 **`C:\Users\frank\OneDrive\backups\Dell Backup\_TAKE_THIS_FOLDER_2026-05-25\audit\DECISION_LOG.md`**
 
 Format your entry as:
 ```markdown
@@ -45,25 +45,25 @@ Format your entry as:
 
 ---
 
-## ðŸŒ 3. Unified Cloud & Repository Mapping
+## 🌐 3. Unified Cloud & Repository Mapping
 
 All agents must respect the designated boundaries between work archives, personal hubs, and cloud directories to maintain absolute compliance (clean-hands defensibility):
 
 | Directory / Resource | Sync Strategy | Purpose |
 |----------------------|---------------|---------|
-| ðŸ“‚ `OneDrive\backups\Dell Backup\` | Synced (Personal OneDrive) | Mirrored transition backups of your personal laptop files. |
-| ðŸ“‚ `OneDrive\Backups\2026-05-oracle-transition\S21_Extracted_Personal\` | Synced (Personal OneDrive) | Extracted mobile raw data roll (Photos, Notes, Passwords), strictly excluding APK files. |
-| ðŸ™ `sentinel-swarm-agent-skills` (GitHub) | Live Private Repo | Visual dashboards, multi-agent specs, and automation tools. |
-| ðŸ“ `starlight\repos\FrankX` | Dev Repo / Non-Work | Main creative, writing, and ACOS development environment. |
+| 📂 `OneDrive\backups\Dell Backup\` | Synced (Personal OneDrive) | Mirrored transition backups of your personal laptop files. |
+| 📂 `OneDrive\Backups\2026-05-oracle-transition\S21_Extracted_Personal\` | Synced (Personal OneDrive) | Extracted mobile raw data roll (Photos, Notes, Passwords), strictly excluding APK files. |
+| 🐙 `sentinel-swarm-agent-skills` (GitHub) | Live Private Repo | Visual dashboards, multi-agent specs, and automation tools. |
+| 📁 `starlight\repos\FrankX` | Dev Repo / Non-Work | Main creative, writing, and ACOS development environment. |
 
 ---
 
-## âš™ï¸ 4. Multi-Agent Collaborative Workflow
+## ⚙️ 4. Multi-Agent Collaborative Workflow
 
 When multiple sessions are active, agents must follow the **Baton Handoff Protocol** to prevent merge conflicts or duplicate efforts:
 
 ```
-[Agent Session A] â”€â”€â–º Updates task.md [x] â”€â”€â–º Commits to Git â”€â”€â–º [Agent Session B] Reads task.md â”€â”€â–º Resumes Sprtnt
+[Agent Session A] ──► Updates task.md [x] ──► Commits to Git ──► [Agent Session B] Reads task.md ──► Resumes Sprtnt
 ```
 
 ### The 4-Step Handoff:
@@ -74,7 +74,7 @@ When multiple sessions are active, agents must follow the **Baton Handoff Protoc
 
 ---
 
-## âš–ï¸ 5. Defensibility & Anti-Suspicion Rules
+## ⚖️ 5. Defensibility & Anti-Suspicion Rules
 
 Any agent executing commands on Frank's machine must respect the **Sentinel Defensibility Protocol** to avoid triggering enterprise security anomalies (CrowdStrike, DLP alerts) during device offboarding:
 
@@ -97,4 +97,3 @@ For any site, app, landing page, dashboard, visual identity, brand, motion, medi
 - C:\Users\frank\starlight\repos\VISUAL_QA_GATE.md
 
 When motion, scroll, generated media, GIF/video, or premium polish matters, route through the Motion Design Studio plugin/skills and verify the result visually.
-
